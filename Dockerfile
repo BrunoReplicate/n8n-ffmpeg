@@ -1,18 +1,25 @@
 # n8n con FFmpeg para procesamiento de video
-# Listo para desplegar en Easypanel
+# Compatible con Easypanel
 
-FROM n8nio/n8n:latest
+FROM node:18-bullseye-slim
 
-USER root
-
-# Instalar FFmpeg y herramientas de video útiles
-RUN apk add --no-cache \
+# Instalar FFmpeg y dependencias
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     ffmpeg \
     mediainfo \
-    && ffmpeg -version
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
-# Volver al usuario n8n por seguridad
+# Instalar n8n globalmente
+RUN npm install -g n8n@1.121.3
+
+# Crear directorio de n8n
+RUN mkdir -p /home/node/.n8n && \
+    chown -R node:node /home/node
+
 USER node
+WORKDIR /home/node
 
 # Puerto por defecto de n8n
 EXPOSE 5678
