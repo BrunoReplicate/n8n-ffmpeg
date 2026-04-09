@@ -1,0 +1,25 @@
+# Docker Compose para n8n + FFmpeg
+# Alternativa si prefieres usar Compose en Easypanel
+
+version: '3.8'
+
+services:
+  n8n:
+    build: .
+    container_name: n8n-ffmpeg
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - GENERIC_TIMEZONE=America/Lima
+      - TZ=America/Lima
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - shared_files:/files
+
+volumes:
+  n8n_data:
+  shared_files:
