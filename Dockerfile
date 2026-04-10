@@ -1,7 +1,7 @@
 # n8n con FFmpeg para procesamiento de video
 # Compatible con Easypanel
 
-FROM node:18-bullseye-slim
+FROM node:20-bullseye-slim
 
 # Instalar FFmpeg y dependencias
 RUN apt-get update && \
